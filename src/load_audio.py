@@ -1,0 +1,14 @@
+# coding: utf-8
+
+import torch
+import torchaudio
+import matplotlib.pyplot as plt
+path = '../dataset/STAIR_ACTIONS_DATASET/extract/audios/a094/0178C/0178C.mp3'
+path = '../dataset/STAIR_ACTIONS_DATASET/for_test/yuyan.mp3'
+waveform, sample_rate = torchaudio.load(path)
+
+print("Shape of waveform: {}".format(waveform.size()))
+print("Sample rate of waveform: {}".format(sample_rate))
+
+plt.figure()
+plt.plot(waveform.t().numpy())
