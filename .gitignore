@@ -128,6 +128,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-dataset/
+dataset/STAIR_ACTIONS_DATASET/original/
+dataset/STAIR_ACTIONS_DATASET/extract/images/
 model/
 
