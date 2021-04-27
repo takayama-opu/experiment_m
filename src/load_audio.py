@@ -53,7 +53,16 @@ print('サンプリングレート：', rate)
 print('再生時間：', time)
 
 filename = "Music01.wav"
-waveform, sample_rate = torchaudio.load("0188C.wav")
+waveform, sample_rate = torchaudio.load("../dataset/STAIR_ACTIONS_DATASET/extract/audios/ogg/a001/0363C/0363C.ogg")
+
+print("Shape of waveform: {}".format(waveform.size()))
+print("Sample rate of waveform: {}".format(sample_rate))
+# 32768
+plt.figure()
+plt.plot(waveform.t().numpy())
+plt.show()
+
+waveform, sample_rate = torchaudio.backend._soundfile_backend.load(str("../dataset/STAIR_ACTIONS_DATASET/extract/audios/ogg/a001/0363C/0363C.ogg"))
 
 print("Shape of waveform: {}".format(waveform.size()))
 print("Sample rate of waveform: {}".format(sample_rate))
