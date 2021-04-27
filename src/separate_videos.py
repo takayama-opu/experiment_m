@@ -77,6 +77,24 @@ def substract_audio_wav(video_path, dir_path, file_name, ext='wav'):
     print(out_path)
     clip_input.audio.write_audiofile('{}/{}.{}'.format(out_path, file_name[1], ext))
 
+def substract_audio_ogg(video_path, dir_path, file_name, ext='ogg'):
+    # Extract audio from input video.
+    clip_input = mp.VideoFileClip(video_path).subclip()
+    file_name = os.path.splitext(file_name)[0].split('-', 1);
+    out_path = os.path.join(dir_path, 'ogg',file_name[0], file_name[1])
+    os.makedirs(out_path, exist_ok=True)
+
+    if type(clip_input.audio) == type(None):
+        print("AUDIO ERROR")
+        error_list.append("-".join(file_name))
+        print(error_list)
+        #shutil.rmtree(out_path)
+        #shutil.rmtree("../dataset/STAIR_ACTIONS_DATASET/extract/images/" + file_name[0] + "/" + file_name[1])
+        return
+
+    print(out_path)
+    clip_input.audio.write_audiofile('{}/{}.{}'.format(out_path, file_name[1], ext))
+
 
 def main():
     bass_path = '../dataset/STAIR_ACTIONS_DATASET/original/videos'  # 入力
@@ -95,7 +113,7 @@ def main():
         n = 0
         for file_name in subfiles:
             #save_all_frames(os.path.join(current, file_name), os.path.join(out_bass_path, 'images'), file_name)
-            substract_audio_wav(os.path.join(current, file_name), os.path.join(out_bass_path, 'audios'), file_name, ext="wav")
+            substract_audio_ogg(os.path.join(current, file_name), os.path.join(out_bass_path, 'audios'), file_name, ext="ogg")
             n = n + 1
             print(100*n/num)
 
