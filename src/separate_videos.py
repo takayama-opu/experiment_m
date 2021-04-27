@@ -57,7 +57,25 @@ def substract_audio(video_path, dir_path, file_name, ext='mp3'):
         return
 
     print(out_path)
-    #clip_input.audio.write_audiofile('{}/{}.{}'.format(out_path, file_name[1], ext))
+    clip_input.audio.write_audiofile('{}/{}.{}'.format(out_path, file_name[1], ext))
+
+def substract_audio_wav(video_path, dir_path, file_name, ext='wav'):
+    # Extract audio from input video.
+    clip_input = mp.VideoFileClip(video_path).subclip()
+    file_name = os.path.splitext(file_name)[0].split('-', 1);
+    out_path = os.path.join(dir_path, 'wav',file_name[0], file_name[1])
+    os.makedirs(out_path, exist_ok=True)
+
+    if type(clip_input.audio) == type(None):
+        print("AUDIO ERROR")
+        error_list.append("-".join(file_name))
+        print(error_list)
+        #shutil.rmtree(out_path)
+        #shutil.rmtree("../dataset/STAIR_ACTIONS_DATASET/extract/images/" + file_name[0] + "/" + file_name[1])
+        return
+
+    print(out_path)
+    clip_input.audio.write_audiofile('{}/{}.{}'.format(out_path, file_name[1], ext))
 
 
 def main():
@@ -76,19 +94,19 @@ def main():
         num = len(subfiles)
         n = 0
         for file_name in subfiles:
-            save_all_frames(os.path.join(current, file_name), os.path.join(out_bass_path, 'images'), file_name)
-            substract_audio(os.path.join(current, file_name), os.path.join(out_bass_path, 'audios'), file_name)
+            #save_all_frames(os.path.join(current, file_name), os.path.join(out_bass_path, 'images'), file_name)
+            substract_audio_wav(os.path.join(current, file_name), os.path.join(out_bass_path, 'audios'), file_name, ext="wav")
             n = n + 1
             print(100*n/num)
 
-    f = open('error_list.txt', 'w')
-    for x in error_list:
-        print("{}\n".format(x), file=f)
-    f.close()
-
-    import msgpack
-    with open('video_fps_info.msgpack', 'wb') as f:
-        msgpack.pack(d, f)
+    # f = open('error_list.txt', 'w')
+    # for x in error_list:
+    #     print("{}\n".format(x), file=f)
+    # f.close()
+    #
+    # import msgpack
+    # with open('video_fps_info.msgpack', 'wb') as f:
+    #     msgpack.pack(d, f)
 
 
 if __name__ == '__main__':
