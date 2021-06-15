@@ -95,3 +95,7 @@ for a in ACTION_NUM:
     tmp = data[data['Action_ID']==a]
     print(tmp['length'].mean())
     print(tmp['length'].describe())
+
+
+ff = np.array([[1,2,3,4,5,6],[7,8,9,10,11,12],[3,2,3,2,3,2]])
+print(ff[:,:4])
